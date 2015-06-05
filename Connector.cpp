@@ -4,9 +4,11 @@
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
 #include <errno.h>
+#include <unistd.h>
 
 #include <iostream>
 #include <netinet/tcp.h>
+#include <string.h>
 
 Connector::Connector(uint16_t port):port(port)
 {
@@ -50,7 +52,21 @@ void Connector::finalize()
 	this->connect_watcher.stop();
 }
 
-void Connector::connnect(ev::io& , int )
+void Connector::connnect(ev::io& connect_event, int )
 {
-	std::cout << this->port << " new connection" << std::endl;
+	struct sockaddr_in client_addr;
+	socklen_t client_len = sizeof(client_addr);
+	int client_sd;
+
+	// Accept client request
+	client_sd = accept(connect_event.fd, (struct sockaddr *)&client_addr, &client_len);
+
+	const char * data = "data forsending jewnfiwen ifwefiu wneifnwienfi wnefi nweifniwenf iwe";
+	send(client_sd, (void*)data, sizeof(char) * strlen(data), 0);
+	close(client_sd);
+}
+
+void Connector::handle(int)
+{
+
 }
