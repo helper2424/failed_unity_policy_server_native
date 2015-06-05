@@ -16,12 +16,22 @@ void Server::run()
 
 	std::cout << "Connectors started" << std::endl;
 
-	this->signal.set<Server, &Server::on_terminate_signal>(this);
-	this->signal.start(SIGINT);
+	this->sigint.set<&Server::on_terminate_signal>();
+	this->sigint.start(SIGINT);
+
+	this->sigterm.set<&Server::on_terminate_signal>();
+	this->sigterm.start(SIGTERM);
+
+	this->sigkill.set<Server::on_terminate_signal>();
+	this->sigkill.start(SIGKILL);
 
 	this->loop.run(0);
 
-	this->signal.stop();
+	this->sigint.stop();
+	this->sigterm.stop();
+	this->sigkill.stop();
+
+	std::cout << "Start stop connectors" << std::endl;
 
 	for(auto &iter: this->connectors)
 		iter->stop();
@@ -40,9 +50,12 @@ void Server::set_ports(ports_t ports)
 	this->ports = ports;
 }
 
-void Server::on_terminate_signal()
+void Server::on_terminate_signal(ev::sig& signal, int)
 {
-	std::cout << "Terminate";
+	signal.loop.break_loop(ev::ALL);
+	signal.stop();
+	std::cout << "Signal handled";
+	//abort();
 }
 
 

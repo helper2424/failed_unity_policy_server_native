@@ -1,9 +1,12 @@
 #include "Connector.h"
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <netinet/tcp.h>
 #include <arpa/inet.h>
+#include <errno.h>
 
 #include <iostream>
+#include <netinet/tcp.h>
 
 Connector::Connector(uint16_t port):port(port)
 {
@@ -12,20 +15,27 @@ Connector::Connector(uint16_t port):port(port)
 
 void Connector::init()
 {
-	int socket_d = socket(AF_INET, SOCK_STREAM, 0);
-//	struct sockaddr_in address;
-//
-//	//address.sin_addr = htonl(INADDR_LOOPBACK);
-//	address.sin_family = AF_INET;
-//	address.sin_port = htons(this->port);
+	this->socket_d = socket(AF_INET, SOCK_STREAM, 0);
+	struct sockaddr_in address;
+	int buf;
 
-	if(socket_d < 0)
+	address.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+	address.sin_family = AF_INET;
+	address.sin_port = htons(this->port);
+
+	if(this->socket_d < 0)
 		std::cout << "Can't create socket";
 
-//	if(bind(socket_d, ))
-//	{
-//		std::cout << "Can't bind to address";
-//	}
+	if(setsockopt(this->socket_d, IPPROTO_TCP, TCP_NODELAY, (const char*)&buf, sizeof(this->socket_d)) == -1)
+		std::cout << "Can't set socket option TCP_NODELAY";
+
+	if(setsockopt(this->socket_d, SOL_SOCKET, SO_REUSEADDR, (const char*)&buf, sizeof(this->socket_d)) == -1)
+		std::cout << "Can't set socket option SO_RESUDEADDR";
+
+	if(bind(socket_d, (struct sockaddr *)&address, sizeof(address)))
+	{
+		std::cout << "Can't bind to address";
+	}
 
 	listen(socket_d, 5);
 
@@ -42,5 +52,5 @@ void Connector::finalize()
 
 void Connector::connnect(ev::io& , int )
 {
+	std::cout << this->port << " new connection" << std::endl;
 }
-

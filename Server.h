@@ -19,9 +19,11 @@ public:
 	void set_ports(ports_t);
 protected:
 	ev::default_loop loop;
-	ev::sig signal;
+	ev::sig sigint;
+	ev::sig sigkill;
+	ev::sig sigterm;
 	connectors_t connectors;
 	ports_t ports;
 
-	void on_terminate_signal();
+	static void on_terminate_signal(ev::sig& w, int revents);
 };

@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=unity_policy_server
+PROJECTNAME=unity_policy_server_native
 
 # Active Configuration
 DEFAULTCONF=Debug
