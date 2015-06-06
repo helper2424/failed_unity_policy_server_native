@@ -52,6 +52,7 @@
         <linkerTool>
           <linkerLibItems>
             <linkerLibLibItem>ev</linkerLibLibItem>
+            <linkerLibLibItem>boost_program_options</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

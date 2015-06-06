@@ -56,7 +56,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-lev
+LDLIBSOPTIONS=-lev -lboost_program_options
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}

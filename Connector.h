@@ -17,8 +17,5 @@ protected:
 	virtual void finalize();
 
 	void connnect(ev::io &w, int revents);
-
-	void test_method(ev::timer &t, int);
-
 	void handle(int client_socket);
 };
