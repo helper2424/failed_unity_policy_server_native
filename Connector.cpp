@@ -21,7 +21,7 @@ void Connector::init()
 	struct sockaddr_in address;
 	int buf;
 
-	address.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+	address.sin_addr.s_addr = htonl(INADDR_ANY);
 	address.sin_family = AF_INET;
 	address.sin_port = htons(this->port);
 
@@ -61,9 +61,11 @@ void Connector::connnect(ev::io& connect_event, int )
 	// Accept client request
 	client_sd = accept(connect_event.fd, (struct sockaddr *)&client_addr, &client_len);
 
-	const char * data = "data forsending jewnfiwen ifwefiu wneifnwienfi wnefi nweifniwenf iwe";
+	const char * data = "<?xml version=\"1.0\"?>\n<cross-domain-policy>\n  <allow-access-from domain=\"*\" to-ports=\"*\"/>\n</cross-domain-policy>";
 	send(client_sd, (void*)data, sizeof(char) * strlen(data), 0);
 	close(client_sd);
+
+	std::cout << "Handle request from " << client_addr.sin_addr.s_addr << " port " << client_addr.sin_port << "\n";
 }
 
 void Connector::handle(int)

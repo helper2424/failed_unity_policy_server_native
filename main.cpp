@@ -36,7 +36,7 @@ int main(int argc, char** argv)
 		return 0;
 	}
 
-	Server::ports_t ports = {{ 843 }};
+	Server::ports_t ports = {{ 843, 90 }};
 
 	Server server;
 	server.set_ports(move(ports));
