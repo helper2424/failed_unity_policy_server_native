@@ -56,6 +56,16 @@ void Server::set_ports(ports_t ports)
 	this->ports = ports;
 }
 
+void Server::set_text(const std::string& text)
+{
+	this->text = text;
+}
+
+const std::string* Server::get_text()
+{
+	return &this->text
+}
+
 void Server::on_terminate_signal(ev::sig& signal, int)
 {
 	signal.loop.break_loop(ev::ALL);
