@@ -6,15 +6,11 @@
 
 #include "Connector.h"
 
-//delete it
-#include <iostream>
-
 class Server {
 public:
 	typedef std::vector<std::shared_ptr<Connector>> connectors_t;
 	typedef std::vector<uint16_t> ports_t;
 
-	Server();
 	void run();
 	void set_ports(ports_t);
 protected:

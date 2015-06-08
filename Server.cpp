@@ -1,20 +1,27 @@
+#include <vector>
+#include <sstream>
+#include <iosfwd>
+#include <streambuf>
 #include "Server.h"
-
-
-Server::Server()
-{
-}
+#include "easylogging++.h"
 
 void Server::run()
 {
+	std::stringstream ports_string;
+	bool comma = false;
 	for(auto &port: this->ports)
 	{
 		auto connector = std::make_shared<Connector>(port);
 		this->connectors.push_back(connector);
 		connector->start();
+
+		if(comma)
+			ports_string << ',';
+		ports_string << port;
+		comma = true;
 	}
 
-	std::cout << "Connectors started" << std::endl;
+	LOG(INFO) << "Connectors started " << this->connectors.size() << ": " << ports_string.str();
 
 	this->sigint.set<&Server::on_terminate_signal>();
 	this->sigint.start(SIGINT);
@@ -31,18 +38,17 @@ void Server::run()
 	this->sigterm.stop();
 	this->sigkill.stop();
 
-	std::cout << "Start stop connectors" << std::endl;
+	LOG(INFO) << "Connectors stop pending ";
 
 	for(auto &iter: this->connectors)
 		iter->stop();
 
-	std::cout << "Connectors stopped" << std::endl;
+	LOG(INFO) << "Connectors stopped";
 
 	this->connectors.clear();
 
-	std::cout << "Connectors removed" << std::endl;
-
-	std::cout << "Gracefull exit" << std::endl;
+	LOG(INFO) << "Connectors removed";
+	LOG(INFO) << "Gracefull exit";
 }
 
 void Server::set_ports(ports_t ports)
@@ -54,7 +60,7 @@ void Server::on_terminate_signal(ev::sig& signal, int)
 {
 	signal.loop.break_loop(ev::ALL);
 	signal.stop();
-	std::cout << "Signal handled";
+	LOG(INFO) << "Terminate signal";
 	//abort();
 }
 

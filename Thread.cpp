@@ -1,15 +1,14 @@
 #include "Thread.h"
-
-#include <iostream>
+#include "easylogging++.h"
 
 Thread::Thread():ev_loop_flags(0)
 {
-	std::cout << "Thread created" << std::endl;
+	LOG(INFO) << "Thread " << this->thread.get_id() << " created";
 }
 
 Thread::~Thread()
 {
-	std::cout << "Thread destructed" << std::endl;
+	LOG(INFO) << "Thread " << this->thread.get_id() << " destructed";
 }
 
 void Thread::run()
@@ -17,15 +16,15 @@ void Thread::run()
 	this->loop = new ev::dynamic_loop(this->ev_loop_flags);
 	this->init();
 
-	std::cout << "Thread " << this->thread.get_id() << " started" << std::endl;
+	LOG(INFO) << "Thread " << this->thread.get_id() << " started";
 
 	this->loop->run(0);
 
-	std::cout << "Thread " << this->thread.get_id() << " fstart inalized" << std::endl;
+	LOG(INFO) << "Thread " << this->thread.get_id() << " start finalized";
 
 	this->finalize();
 
-	std::cout << "Thread " << this->thread.get_id() << " finalized" << std::endl;
+	LOG(INFO) << "Thread " << this->thread.get_id() << " finalized";
 }
 
 void Thread::start()
@@ -35,16 +34,10 @@ void Thread::start()
 
 void Thread::stop()
 {
-	std::cout << "unloop" << std::endl;
-	std::cout << this->thread.get_id() << std::endl;
-
-	if(this->thread.joinable())
-		std::cout << " it's joinable" << std::endl;
-
 	this->loop->break_loop(ev::ALL);
 
 	this->thread.join();
-	std::cout << "Thread " << this->thread.get_id() << " stopped" << std::endl;
+	LOG(INFO) << "Thread " << this->thread.get_id() << " stopped" << std::endl;
 }
 
 

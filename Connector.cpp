@@ -6,9 +6,9 @@
 #include <errno.h>
 #include <unistd.h>
 
-#include <iostream>
 #include <netinet/tcp.h>
 #include <string.h>
+#include "easylogging++.h"
 
 Connector::Connector(uint16_t port):port(port)
 {
@@ -21,23 +21,24 @@ void Connector::init()
 	struct sockaddr_in address;
 	int buf;
 
+	if(this->socket_d < 0)
+	{
+		LOG(ERROR) << "Can't create socket for connection with port " << this->port;
+		return;
+	}
+
 	address.sin_addr.s_addr = htonl(INADDR_ANY);
 	address.sin_family = AF_INET;
 	address.sin_port = htons(this->port);
 
-	if(this->socket_d < 0)
-		std::cout << "Can't create socket";
-
 	if(setsockopt(this->socket_d, IPPROTO_TCP, TCP_NODELAY, (const char*)&buf, sizeof(this->socket_d)) == -1)
-		std::cout << "Can't set socket option TCP_NODELAY";
+		LOG(ERROR) << "Can't set socket option TCP_NODELAY with port " << this->port;
 
 	if(setsockopt(this->socket_d, SOL_SOCKET, SO_REUSEADDR, (const char*)&buf, sizeof(this->socket_d)) == -1)
-		std::cout << "Can't set socket option SO_RESUDEADDR";
+		LOG(ERROR) << "Can't set socket option SO_REUSEADDR with port " << this->port;
 
 	if(bind(socket_d, (struct sockaddr *)&address, sizeof(address)))
-	{
-		std::cout << "Can't bind to address";
-	}
+		LOG(ERROR) << "Can't bind address 0.0.0.0:" << this->port;
 
 	listen(socket_d, 5);
 
@@ -65,7 +66,9 @@ void Connector::connnect(ev::io& connect_event, int )
 	send(client_sd, (void*)data, sizeof(char) * strlen(data), 0);
 	close(client_sd);
 
-	std::cout << "Handle request from " << client_addr.sin_addr.s_addr << " port " << client_addr.sin_port << "\n";
+	char ip_address[INET_ADDRSTRLEN];
+	inet_ntop(AF_INET, &(client_addr.sin_addr), ip_address, INET_ADDRSTRLEN);
+	LOG(INFO) << "Handle request from " << ip_address << " port " << this->port;
 }
 
 void Connector::handle(int)

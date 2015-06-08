@@ -1,7 +1,10 @@
 #include "Server.h"
 #include <vector>
 #include <boost/program_options.hpp>
+#include "easylogging++.h"
 
+INITIALIZE_EASYLOGGINGPP
+	
 using namespace std;
 
 int main(int argc, char** argv)

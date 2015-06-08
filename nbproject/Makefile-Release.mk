@@ -36,7 +36,6 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Connector.o \
-	${OBJECTDIR}/Log.o \
 	${OBJECTDIR}/Server.o \
 	${OBJECTDIR}/Thread.o \
 	${OBJECTDIR}/main.o
@@ -70,11 +69,6 @@ ${OBJECTDIR}/Connector.o: Connector.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Connector.o Connector.cpp
-
-${OBJECTDIR}/Log.o: Log.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Log.o Log.cpp
 
 ${OBJECTDIR}/Server.o: Server.cpp 
 	${MKDIR} -p ${OBJECTDIR}

@@ -14,12 +14,11 @@
                    projectFiles="true">
       <itemPath>Connector.cpp</itemPath>
       <itemPath>Connector.h</itemPath>
-      <itemPath>Log.cpp</itemPath>
-      <itemPath>Log.h</itemPath>
       <itemPath>Server.cpp</itemPath>
       <itemPath>Server.h</itemPath>
       <itemPath>Thread.cpp</itemPath>
       <itemPath>Thread.h</itemPath>
+      <itemPath>easylogging++.h</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -60,10 +59,6 @@
       </item>
       <item path="Connector.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Log.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Log.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Server.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Server.h" ex="false" tool="3" flavor2="0">
@@ -71,6 +66,8 @@
       <item path="Thread.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Thread.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="easylogging++.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -99,10 +96,6 @@
       </item>
       <item path="Connector.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Log.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Log.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Server.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Server.h" ex="false" tool="3" flavor2="0">
@@ -110,6 +103,8 @@
       <item path="Thread.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Thread.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="easylogging++.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
