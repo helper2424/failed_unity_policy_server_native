@@ -63,7 +63,7 @@ void Server::set_text(const std::string& text)
 
 const std::string* Server::get_text()
 {
-	return &this->text
+	return &this->text;
 }
 
 void Server::on_terminate_signal(ev::sig& signal, int)

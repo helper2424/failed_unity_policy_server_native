@@ -6,6 +6,13 @@
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/Users/helper2424/Documents/unity_policy_server_native/easylogging++.h</file>
+            <file>file:/Users/helper2424/Documents/unity_policy_server_native/main.cpp</file>
+            <file>file:/Users/helper2424/Documents/unity_policy_server_native/Server.h</file>
+            <file>file:/Users/helper2424/Documents/unity_policy_server_native/Thread.cpp</file>
+            <file>file:/Users/helper2424/Documents/unity_policy_server_native/Server.cpp</file>
+            <file>file:/Users/helper2424/Documents/unity_policy_server_native/Connector.cpp</file>
+        </group>
     </open-files>
 </project-private>

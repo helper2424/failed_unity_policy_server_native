@@ -50,8 +50,13 @@ void Connector::init()
 
 void Connector::finalize()
 {
+}
+
+void Connector::on_stop()
+{
 	this->connect_watcher.stop();
 }
+
 
 void Connector::connnect(ev::io& connect_event, int )
 {

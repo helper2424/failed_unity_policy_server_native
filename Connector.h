@@ -15,6 +15,7 @@ protected:
 
 	virtual void init();
 	virtual void finalize();
+	virtual void on_stop();
 
 	void connnect(ev::io &w, int revents);
 	void handle(int client_socket);
