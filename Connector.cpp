@@ -9,6 +9,7 @@
 #include <netinet/tcp.h>
 #include <string.h>
 #include "easylogging++.h"
+#include <future>
 
 Connector::Connector(uint16_t port):port(port)
 {
@@ -67,13 +68,15 @@ void Connector::connnect(ev::io& connect_event, int )
 	// Accept client request
 	client_sd = accept(connect_event.fd, (struct sockaddr *)&client_addr, &client_len);
 
-	const char * data = "<?xml version=\"1.0\"?>\n<cross-domain-policy>\n  <allow-access-from domain=\"*\" to-ports=\"*\"/>\n</cross-domain-policy>";
-	send(client_sd, (void*)data, sizeof(char) * strlen(data), 0);
-	close(client_sd);
+	std::async(std::launch::async, [client_addr, this](int client_socket) {
+		const char * data = "<?xml version=\"1.0\"?>\n<cross-domain-policy>\n  <allow-access-from domain=\"*\" to-ports=\"*\"/>\n</cross-domain-policy>";
+		send(client_socket, (void*)data, sizeof(char) * strlen(data), 0);
+		close(client_socket);
 
-	char ip_address[INET_ADDRSTRLEN];
-	inet_ntop(AF_INET, &(client_addr.sin_addr), ip_address, INET_ADDRSTRLEN);
-	LOG(INFO) << "Handle request from " << ip_address << " port " << this->port;
+		char ip_address[INET_ADDRSTRLEN];
+		inet_ntop(AF_INET, &(client_addr.sin_addr), ip_address, INET_ADDRSTRLEN);
+		LOG(INFO) << "Handle request from " << ip_address << " port " << this->port;
+	}, client_sd);
 }
 
 void Connector::handle(int)
